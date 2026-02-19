@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { register, login } = require('../controllers/auth.controller');
+const authController = require("../controllers/auth.controller");
+const { loginLimiter } = require("../middlewares/rateLimiter.middleware");
+
 
 /**
  * @swagger
@@ -61,6 +64,7 @@ const { register, login } = require('../controllers/auth.controller');
  */
 
 router.post('/register', register);
-router.post('/login', login);
+//router.post('/login', login);
+router.post("/login", loginLimiter, authController.login);
 
 module.exports = router;

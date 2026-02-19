@@ -7,16 +7,22 @@ const bookRoutes = require('./routes/book.routes');
 const issueRoutes = require('./routes/issue.routes');
 const setupSwagger = require('./config/swagger'); 
 const errorHandler = require('./middlewares/error.middleware');
+const { apiLimiter } = require("./middlewares/rateLimiter.middleware");
+
+
 
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(apiLimiter);
+
  
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/issues', issueRoutes);
+
 
 setupSwagger(app);
 app.use(errorHandler);

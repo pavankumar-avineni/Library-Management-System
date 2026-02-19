@@ -4,12 +4,8 @@ const router = express.Router();
 const { verifyToken } = require('../middlewares/auth.middleware');
 const { authorizeRoles } = require('../middlewares/role.middleware');
 
-const {
-  issueBook,
-  returnBook,
-  getAllIssuedBooks,
-  getMyIssuedBooks
-} = require('../controllers/issue.controller');
+
+const issueController = require('../controllers/issue.controller');
 
 
 /**
@@ -91,10 +87,14 @@ const {
  *         description: User issued books
  */
 
-router.post('/issue', verifyToken, authorizeRoles('student', 'admin'), issueBook);
-router.post('/return', verifyToken, authorizeRoles('student', 'admin'), returnBook);
+router.post('/issue', verifyToken, authorizeRoles('student', 'admin'), issueController.issueBook);
+router.post('/return', verifyToken, authorizeRoles('student', 'admin'), issueController.returnBook);
 
-router.get('/', verifyToken, authorizeRoles('admin', 'librarian'), getAllIssuedBooks);
-router.get('/my', verifyToken, getMyIssuedBooks);
+router.get('/', verifyToken, authorizeRoles('admin', 'librarian'), issueController.getAllIssuedBooks);
+router.get('/my', verifyToken, issueController.getMyIssuedBooks);
+router.post('/:id/pay-fine', verifyToken, issueController.payFine);
+router.post('/', verifyToken, issueController.issueBook);
+router.patch('/:id/return', verifyToken, issueController.returnBook);
+router.post('/:id/pay-fine', verifyToken, issueController.payFine);
 
 module.exports = router;

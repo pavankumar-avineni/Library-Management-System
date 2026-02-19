@@ -22,12 +22,8 @@ const options = {
           bearerFormat: 'JWT'
         }
       }
-    },
-    security: [
-      {
-        bearerAuth: []
-      }
-    ]
+    }
+    // ❌ REMOVE global security from here
   },
   apis: ['./src/routes/*.js']
 };

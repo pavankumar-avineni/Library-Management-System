@@ -1,0 +1,6 @@
+module.exports = {
+  ISSUE_DURATION_DAYS: 7,
+  GRACE_PERIOD_DAYS: 2,
+  FINE_PER_DAY: 10,
+  MAX_FINE_LIMIT: 500
+};
